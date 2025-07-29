@@ -24,6 +24,7 @@ public class InstallationPathConfig {
     private static final String STATIC_PATH;
     private static final String TEMPLATES_PATH;
     private static final String SIGNATURES_PATH;
+    private static final String PRIVATE_KEY_PATH;
 
     static {
         BASE_PATH = initializeBasePath();
@@ -43,6 +44,7 @@ public class InstallationPathConfig {
         STATIC_PATH = CUSTOM_FILES_PATH + "static" + File.separator;
         TEMPLATES_PATH = CUSTOM_FILES_PATH + "templates" + File.separator;
         SIGNATURES_PATH = CUSTOM_FILES_PATH + "signatures" + File.separator;
+        PRIVATE_KEY_PATH = CUSTOM_FILES_PATH + "keys" + File.separator;
     }
 
     private static String initializeBasePath() {
@@ -113,5 +115,9 @@ public class InstallationPathConfig {
 
     public static String getSignaturesPath() {
         return SIGNATURES_PATH;
+    }
+
+    public static String getPrivateKeyPath() {
+        return PRIVATE_KEY_PATH;
     }
 }
