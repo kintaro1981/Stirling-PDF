@@ -130,11 +130,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
-
-                log.info(
-                        "JWT authentication successful for user: {} - Authentication set in SecurityContext",
-                        username);
-
             } else {
                 throw new UsernameNotFoundException("User not found: " + username);
             }

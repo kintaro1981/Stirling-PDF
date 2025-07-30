@@ -213,6 +213,7 @@ public class JwtKeystoreService implements JwtKeystoreServiceInterface {
         byte[] keyBytes = Base64.getDecoder().decode(encodedKey);
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+
         return keyFactory.generatePrivate(keySpec);
     }
 
