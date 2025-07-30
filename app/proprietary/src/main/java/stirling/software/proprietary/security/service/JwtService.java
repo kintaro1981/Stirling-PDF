@@ -204,7 +204,7 @@ public class JwtService implements JwtServiceInterface {
                 ResponseCookie.from(JWT_COOKIE_NAME, Newlines.stripAll(token))
                         .httpOnly(true)
                         .secure(true)
-                        .sameSite("None")
+                        .sameSite("Strict")
                         .maxAge(EXPIRATION / 1000)
                         .path("/")
                         .build();
