@@ -153,7 +153,7 @@ public class JwtKeystoreService implements JwtKeystoreServiceInterface {
     }
 
     private KeyPair generateRSAKeypair() {
-        KeyPairGenerator keyPairGenerator = null;
+        KeyPairGenerator keyPairGenerator;
 
         try {
             keyPairGenerator = KeyPairGenerator.getInstance("RSA");
