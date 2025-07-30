@@ -61,10 +61,10 @@ security:
     spCert: classpath:certificate.crt # Your signing certificate. Generated from your keypair
   jwt:
     enableKeyStore: true # Set to 'true' to enable JWT key store
-    enableKeyRotation: true # Set to 'true' to enable JWT key rotation
+    enableKeyRotation: false # Set to 'true' to enable JWT key rotation
     enableKeyCleanup: true # Set to 'true' to enable JWT key cleanup
-    keyRetentionDays: 7 # Number of days to retain old keys
-    cleanupBatchSize: 100 # Number of keys to clean up in each batch
+    keyRetentionDays: 7 # Number of days to retain old keys. The default is 7 days.
+    cleanupBatchSize: 100 # Number of keys to clean up in each batch. The default is 100.
 
 premium:
   key: 00000000-0000-0000-0000-000000000000

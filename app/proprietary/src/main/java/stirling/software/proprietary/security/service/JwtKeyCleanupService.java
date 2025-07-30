@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBooleanProperty;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -25,6 +26,7 @@ import stirling.software.proprietary.security.model.JwtSigningKey;
 
 @Slf4j
 @Service
+@ConditionalOnBooleanProperty("v2")
 public class JwtKeyCleanupService {
 
     private final JwtSigningKeyRepository signingKeyRepository;

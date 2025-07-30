@@ -41,7 +41,7 @@ public class JwtService implements JwtServiceInterface {
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String BEARER_PREFIX = "Bearer ";
     private static final String ISSUER = "Stirling PDF";
-    private static final long EXPIRATION = 300000; // 5 minutes in milliseconds
+    private static final long EXPIRATION = 3600000;
 
     private final JwtKeystoreServiceInterface keystoreService;
     private final boolean v2Enabled;
@@ -127,7 +127,6 @@ public class JwtService implements JwtServiceInterface {
 
     private Claims extractAllClaims(String token) {
         try {
-            // Extract key ID from token header if present
             String keyId = extractKeyId(token);
             KeyPair keyPair;
 
