@@ -43,13 +43,12 @@ public class JwtService implements JwtServiceInterface {
     private static final String ISSUER = "Stirling PDF";
     private static final long EXPIRATION = 3600000;
 
-    private final JwtKeystoreServiceInterface keystoreService;
+    private final KeystoreServiceInterface keystoreService;
     private final boolean v2Enabled;
 
     @Autowired
     public JwtService(
-            @Qualifier("v2Enabled") boolean v2Enabled,
-            JwtKeystoreServiceInterface keystoreService) {
+            @Qualifier("v2Enabled") boolean v2Enabled, KeystoreServiceInterface keystoreService) {
         this.v2Enabled = v2Enabled;
         this.keystoreService = keystoreService;
     }
@@ -132,7 +131,8 @@ public class JwtService implements JwtServiceInterface {
 
             if (keyId != null) {
                 log.debug("Looking up key pair for key ID: {}", keyId);
-                Optional<KeyPair> specificKeyPair = keystoreService.getKeyPairByKeyId(keyId);
+                Optional<KeyPair> specificKeyPair =
+                        keystoreService.getKeyPairByKeyId(keyId); // todo: move to in-memory cache
 
                 if (specificKeyPair.isPresent()) {
                     keyPair = specificKeyPair.get();
@@ -178,13 +178,8 @@ public class JwtService implements JwtServiceInterface {
 
     @Override
     public String extractToken(HttpServletRequest request) {
-        String authHeader = request.getHeader(AUTHORIZATION_HEADER);
-
-        if (authHeader != null && authHeader.startsWith(BEARER_PREFIX)) {
-            return authHeader.substring(BEARER_PREFIX.length());
-        }
-
         Cookie[] cookies = request.getCookies();
+
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (JWT_COOKIE_NAME.equals(cookie.getName())) {
@@ -203,7 +198,7 @@ public class JwtService implements JwtServiceInterface {
         ResponseCookie cookie =
                 ResponseCookie.from(JWT_COOKIE_NAME, Newlines.stripAll(token))
                         .httpOnly(true)
-                        .secure(true)
+                        //                .secure(true) // todo: fix, make configurable
                         .sameSite("Strict")
                         .maxAge(EXPIRATION / 1000)
                         .path("/")

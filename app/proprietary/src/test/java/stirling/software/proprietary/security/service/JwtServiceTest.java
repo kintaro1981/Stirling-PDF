@@ -55,7 +55,7 @@ class JwtServiceTest {
     private HttpServletResponse response;
 
     @Mock
-    private JwtKeystoreServiceInterface keystoreService;
+    private KeystoreServiceInterface keystoreService;
 
     private JwtService jwtService;
     private KeyPair testKeyPair;

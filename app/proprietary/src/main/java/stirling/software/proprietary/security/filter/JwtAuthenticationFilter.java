@@ -69,10 +69,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         String jwtToken = jwtService.extractToken(request);
-
+        // todo: X-API-KEY
         if (jwtToken == null) {
             // If they are unauthenticated and navigating to '/', redirect to '/login' instead of
             // sending a 401
+            // todo: any unauthenticated requests should redirect to login
             if ("/".equals(request.getRequestURI())
                     && "GET".equalsIgnoreCase(request.getMethod())) {
                 response.sendRedirect("/login");
