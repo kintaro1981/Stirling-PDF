@@ -10,6 +10,7 @@ import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,6 +43,9 @@ public class JwtService implements JwtServiceInterface {
     private static final String BEARER_PREFIX = "Bearer ";
     private static final String ISSUER = "Stirling PDF";
     private static final long EXPIRATION = 3600000;
+
+    @Value("${stirling.security.jwt.secureCookie:true}")
+    private boolean secureCookie;
 
     private final KeystoreServiceInterface keystoreService;
     private final boolean v2Enabled;
@@ -198,7 +202,7 @@ public class JwtService implements JwtServiceInterface {
         ResponseCookie cookie =
                 ResponseCookie.from(JWT_COOKIE_NAME, Newlines.stripAll(token))
                         .httpOnly(true)
-                        //                .secure(true) // todo: fix, make configurable
+                        .secure(secureCookie)
                         .sameSite("Strict")
                         .maxAge(EXPIRATION / 1000)
                         .path("/")
@@ -214,7 +218,7 @@ public class JwtService implements JwtServiceInterface {
         ResponseCookie cookie =
                 ResponseCookie.from(JWT_COOKIE_NAME, "")
                         .httpOnly(true)
-                        .secure(true)
+                        .secure(secureCookie)
                         .sameSite("None")
                         .maxAge(0)
                         .path("/")
